@@ -1,7 +1,7 @@
 FROM hpcaitech/pytorch-cuda:2.1.0-12.1.0
 
 # metainformation
-LABEL org.opencontainers.image.source = "https://github.com/alexyeoh/Open-Sora/"
+LABEL org.opencontainers.image.source = "https://github.com/hpcaitech/Open-Sora"
 LABEL org.opencontainers.image.licenses = "Apache License 2.0"
 LABEL org.opencontainers.image.base.name = "docker.io/library/hpcaitech/pytorch-cuda:2.1.0-12.1.0"
 
@@ -12,12 +12,10 @@ COPY . .
 
 # inatall library dependencies
 RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
-RUN apt-get update && apt-get install -y opencv-python-headless
-RUN pip3 install opencv-python-headless==4.5.3.56
-
 
 # install flash attention
 RUN pip install flash-attn --no-build-isolation
+RUN pip install gradio spaces
 
 # install apex
 RUN pip install -v --disable-pip-version-check --no-cache-dir --no-build-isolation --config-settings "--build-option=--cpp_ext" --config-settings "--build-option=--cuda_ext" git+https://github.com/NVIDIA/apex.git
